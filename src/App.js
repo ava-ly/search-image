@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bulma/css/bulma.css';
+import { useState } from 'react';
+import SearchBar from './components/SearchBar';
+import ImageList from './components/ImageList';
+import searchImages from './api';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    const [images, setImages ] = useState([]);
+    const handleSubmit = async (term) => {
+        const result = await searchImages(term);
+        setImages(result);
+    };
+
+    return (
+        <div>
+            <section className='hero is-info'>
+                <div className='hero-body'>
+                    <p className='title'>G-spot</p>
+                </div>
+            </section>
+        
+            <div>
+                <SearchBar onSubmit={handleSubmit} />
+            </div>
+
+            <div>
+                <ImageList images={images} />
+            </div>
+                    
+        </div>
+    
+    );
+};
 
 export default App;
